@@ -430,7 +430,7 @@ input:focus {
 }
 
 .chip:has(input:checked) small {
-  color: rgba(29, 78, 216, 0.72);
+  color: var(--primary-dark);
 }
 
 /* ----------------------------------------------------------------- chart */
