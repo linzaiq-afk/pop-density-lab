@@ -1,0 +1,43 @@
+name: pop-density-lab
+
+services:
+  go-backend:
+    build:
+      context: ./backend
+    container_name: pop-density-go
+    environment:
+      LISTEN_ADDR: ":8081"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8081/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - labnet
+
+  hydrogen:
+    build:
+      context: ./hydrogen
+    container_name: pop-density-hydrogen
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/var/www/frontend:ro
+    depends_on:
+      go-backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    driver: bridge

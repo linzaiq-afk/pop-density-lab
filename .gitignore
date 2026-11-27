@@ -1,0 +1,21 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local env and logs
+.env
+*.log
+
+# Go build artifacts
+backend/server
+backend/server.exe
+backend/server_test.exe
+backend/pop-density-lab
+backend/pop-density-lab.exe
+
+# Temporary data
+data/
+tmp/
